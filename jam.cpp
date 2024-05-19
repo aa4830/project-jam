@@ -73,9 +73,10 @@ int main()
 	}
 
 	//포인터 변수
-	// 주소를 저장하는 변수
+	// 주소를 가리키는,  저장하는 변수
 	// 자료형 + *변수명
 	//자료형 : 해당 포인터에게 전달된 주소를 해석하는 단위
+	int* pInt = nullptr; // nullptr : 아무것도 가르키지 않겠다. 
 
 	int i = 100;
 	int* pInt = &i; // i변수의 위치 주소값을 pInt 변수에 집어넣겠다는 의미, pInt가 i를 가르킴
@@ -83,11 +84,10 @@ int main()
 	float f = 3.f;
 
 	// 주소로 접근
-	(*pInt) = 100; // i변수에 100을 넣겠다는 의미
+	(*pInt) = 100; // 주소로 접근해서 i변수에 100을 넣겠다는 의미, ""pInt에 있는 주소값""으로 접근,참조한다는 의미
 	int* pInt = (int*)&f; // 강제로 f 변수의 위치 주소값을 int형 pInt 변수에 넣는다는 의미
 	// 오류가 발생 >> why? pInt 변수는 int로 인식하겠다고 했는데, f는 실수형으로 입력되어 있으므로
-
-
+	i = *pInt; // pInt가 가르키고있는 곳으로 접근을해서 읽은 값을 i에 넣으라는 의미.
 
 	// 주소의 단위 BYTE
 	// 주소가 100 ,101이라면 차이가 1. 1byte 차이가 난다.
@@ -220,7 +220,7 @@ int main()
 
 	
 
-
+	//문자열 개수 세기
 	wchar_t szName[10] = L"Raimond";
 	int iLen = wcslen(szName); // wcslen : 문자열의 길이를 알려주는 함수. 문자열의 시작 주소를 알려주어야한다.
 							   // 단, #include <wchar.h> 를 사용해야함.
@@ -242,9 +242,53 @@ int main()
 		return i;  // i 값이 문자열 끝 값이 0이면 i 값을 return
 	}
 
+	// 문자열 이어 붙이기 
+	wcscat_s();
+	// 1. 목적지 문자열의 끝을 확인(문자열이 이어 붙을 시작 위치)
+	iDestLen; // Dest 문자열의 끝 인덱스
+
+	// 2. 반복적으로 src 문자열 dest 끝 위치에 복사하기
+	for (int i = 0; i < iSrcLen + 1; ++i)
+	{
+		_pDest[iDestLen + i] = _pSrc[i];
+	}
+	// 3. scr 문자열의 끝을 만나면 반복 종료
 
 
+	wchar_t szString[100] = L"abc";
+	wcscat_s(szString, 100, L"def"); // (변수 이름, 버퍼사이즈, 주소)
+	wcscat_s(szString, 100, L"ghi");
 
+	void StrCat(wchar_t* _pDest, unsigned int _iBufferSize, const wchar_t* pSrc)
+	{	
+		//예외처리
+		//이어붙인 최종 문자열 길이가, 목적지 저장 공간을 넘어서려는 경우
+		int iDestLen = GetLength(_pDest);
+		int iSrcLen = GetLength(_pSrc);
+
+		if (_iBufferSize < iDestLen + iSrcLen + 1)//NULL 문자 공간까지 계산
+		{
+			assert(nullptr);
+		}
+	}
+
+	// 구조체와 포인터
+	typedef struct _tagMyST
+	{
+		int a;  // 맴버, 변수가 아님
+		float f;
+	}MYST;
+
+	MYST s = {};
+	
+	MYST* pST = &s;
+	pST + 1; // 8byte씩 증가
+	
+	(*pST).a = 100; // 주소로 접근해서 a파트에 100을 넣겠다는 의미
+	(*pST).f = 3.14f;
+
+	pST->a; = 100;
+	pST->f; = 3.14f; // (*pST).f = 3.14f; 똑같은 말
 
 
 
