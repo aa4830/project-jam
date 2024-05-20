@@ -1,5 +1,7 @@
 #include <iostream>
 #include <wchar.h>
+#include <string> // <> 정규 컴파일러 디렉토리에서만 찾음
+#include "conio.h" // "" 내가 만든 디렉토리에서 찾음
 using namespace std;
 
 int main()
@@ -58,6 +60,36 @@ int main()
 
 
 	//사용자 정의 자료형
+	//struct
+	//0 ~ 255 , for GPU , photoshop
+	struct Color
+	{
+		unsigned char R;
+		unsigned char G;
+		unsigned char B;
+	} 
+	// 0 ~ 1% //LED 밝기, for GPU
+	struct Color
+	{
+		float R; 0.8 * 255 =
+		float G;
+		float B;
+	}
+	struct Position
+	{	
+		int X;
+		int Y;
+	}
+	int main()
+	{
+		Actor* Player = new Actor;
+		Player->Position.X = 10;
+		Player->Position.Y = 10;
+		return 0;
+	}
+	cout << Player->Position.X << endl;
+	delete Player;
+
 	typedef struct _tagMyST
 	{
 		int a;
@@ -73,7 +105,7 @@ int main()
 	}
 
 	//포인터 변수
-	// 주소를 가리키는,  저장하는 변수
+	// 주소를 가리키는, 저장하는 변수
 	// 자료형 + *변수명
 	//자료형 : 해당 포인터에게 전달된 주소를 해석하는 단위
 	int* pInt = nullptr; // nullptr : 아무것도 가르키지 않겠다. 
@@ -162,6 +194,12 @@ int main()
 	// 가리키는 원본을 수정 할 수 없음
 	pIntConst = &b; // 가능 
 
+	const char* Message = "Hello World";
+	cout << Message << endl;
+	
+	string MessageString = "Hello World"
+	cout << MessageString << endl; // Hello World가 출력된다.
+
 	//const 포인터 const 초기화 시 가리킨 대상만 가리키고, 가리키는 원본을 수정 할 수 없음
 	const int* const pConstIntConst = nullptr;
 
@@ -188,21 +226,28 @@ int main()
 	}
 
 	// 메모리 영역
-	// 1. 스택
+	// 1. 스택, 자동으로 지워짐
 	// 2. 데이터
-	// 3. 힙
+	// 3. 힙, 직접 지우기 전까지는 안지워짐
 	// 4. Rom(Read Only Memory 읽기전용메모리)(코드 메모리)
 
 	// 문자
 	// char(1), wchar(2)
-	wchar_t wc = 49;
+	char M[6] = { "HEl\0lO" } // \0이 나올 때 까지 출력
+	cout << strlen(M) << endl; // M배열 문자열 개수 세기
+
+	//string 문자열
+	string Message = "Hello";
+	cout << Message << endl; // 문자를 출력해줌
+	string Message2 = "World";
+	cout << Message + Message2 << endl; // Hello World가 출력됌 오직"+"만 가능
 
 	char c = 'a';
 	wchar_t wc = L'a'; // L을 앞에 붙이면 a문자를 2byte로 쓰겠다는 의미
 
 
 	char szChar[10] = "abcdef";
-	wchar_t szWChar[10] = L"abcdef"; // 문자열 끝에는 안보일뿐 0문자가 포함 되어있다.
+	wchar_t szWChar[10] = L"abcdef"; // 문자열 끝에는 안보일뿐 0문자가 포함 되어있다. //
 
 
 	short arrShort[10] = L"abcdef";; // 첫번째 자리에 97을 넣고 두번째 자리에 98을 넣고~~
@@ -289,6 +334,23 @@ int main()
 
 	pST->a; = 100;
 	pST->f; = 3.14f; // (*pST).f = 3.14f; 똑같은 말
+
+	//문자열과 포인터
+	new int; // 메모리 시작위치를 알려준다
+	//동적 변수 선언
+	int* P = new int; // 메모리를 할당하고, 매모리 위치 시작 주소를 p에 저장
+	delete P; // 메모리를 해제시킴. 삭제하지않으면 계속 메모리를 사용함
+
+	int* A = new int[10]; // 메모리 위치 시작 주소를 A에 저장
+	*(A + 1) = 10;
+	A[1] = 10;
+
+	delete[] P; // 배열로 생성했으면 배열로 삭제해야함
+
+	
+
+
+
 
 
 
