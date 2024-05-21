@@ -347,7 +347,35 @@ int main()
 
 	delete[] P; // 배열로 생성했으면 배열로 삭제해야함
 
+
+
+	//힙 영역 (동적 할당)
+	// 1. 런타임 중에 대응 가능
+	// 2. 사용자가 직접 메모리를 관리해줘야함(해제) 
+	int main()
+	{
+		int* pInt =(int*)malloc(100); // malloc(100) 100바이트가 힙 메모리 안에 만들어짐. 무슨 용도로 사용할 지는 내가 정한 포인터로 가르켜서 사용
+		float* pF = (float*)malloc(4); // malloc 순수하게 주소의 개념으로만 리턴할것이기때문에 반환타입이 보이드타입으로 되어있는 것 
+		*pF = 1.23f;
+
+		int* pInt = nullptr;
+		if (100 == iIntput)
+		{
+			pInt = (int*)malloc(100);
+		}
+
+		if (nullptr != pInt)
+		{
+			free(pInt); // free 주소를 전달해주면 주소가 가르키는 곳을 해제시켜줌.
+		}
+
+
+
+		return 0;	
+	}
+
 	
+
 
 
 
