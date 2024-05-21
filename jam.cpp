@@ -59,7 +59,7 @@ int main()
 	//data = ++a; ( 연산자 우선순위 가장 먼저 )   a= a+1;-> data = a;                                              )
 
 
-	//사용자 정의 자료형
+	//사용자 정의 자료형, 사용자가 직접 만든 자료형
 	//struct
 	//0 ~ 255 , for GPU , photoshop
 	struct Color
@@ -354,7 +354,7 @@ int main()
 	// 2. 사용자가 직접 메모리를 관리해줘야함(해제) 
 	int main()
 	{
-		int* pInt =(int*)malloc(100); // malloc(100) 100바이트가 힙 메모리 안에 만들어짐. 무슨 용도로 사용할 지는 내가 정한 포인터로 가르켜서 사용
+		int* pInt = (int*)malloc(100); // malloc(100) 100바이트가 힙 메모리 안에 만들어짐. 무슨 용도로 사용할 지는 내가 정한 포인터로 가르켜서 사용
 		float* pF = (float*)malloc(4); // malloc 순수하게 주소의 개념으로만 리턴할것이기때문에 반환타입이 보이드타입으로 되어있는 것 
 		*pF = 1.23f;
 
@@ -368,15 +368,85 @@ int main()
 		{
 			free(pInt); // free 주소를 전달해주면 주소가 가르키는 곳을 해제시켜줌.
 		}
-
-
-
-		return 0;	
 	}
 
-	
 
 
+
+		// 가변배열 : 크기가 고정이 아닌 배열??
+
+		int a = 100;
+		int arr[a] = {}; // 불가능
+		//배열 개수를 선언할 때는 변수를 사용 할 수 없다.
+
+		//객체(instance)
+		// int a; 여기서 a가 객체. 내가 의도한 자료형의 실질적인 데이터
+
+		struct tArr
+		{
+			int arr[100];
+		}
+
+		tArr s;
+
+		for (int i = 0; i < 100; ++i)
+		{
+			s.arr[i] = i;
+		}
+		// 이럴바엔 구조체 안만들고 배열을 만들고말지.
+		// 그 래 서
+		typdef struct _tagArr
+		{
+			int* pInt;
+			int iCount; // 데이터를 넣어줬을때 이번에 들어갈 데이터자리를 알려면 현재까지 들어온 데이터 수를 알아야함
+			int iMaxCount; // 가변배열 기능을 하기위해서 count값이 한계치에 도달했을때를 알아야함.그때그때 늘려줘야하니까
+
+
+		}tArr;
+
+	// 배열 초기화 함수
+	void InitArr(tArr* _pArr);
+	{
+		_pArr->pInt = (int*)malloc(40);
+		_pArr->iCount = 0;
+		_pArr->iMaxCount = 10; // 메모리 크기가 40이므로 int 10개가 최대
+	}
+	// 배열 메모리 해제 함수
+	void ReleaseArr(tArr* _pArr);
+	{
+		free(_pArr->pInt);
+		_pArr->iCount = 0;
+		_pArr->iMaxCount = 0;
+	}
+	// 데이터 추가 함수
+	void PushBack(tArr* _pArr, int _iData);
+	{
+		if (_pArr->iMaxCount <= _pArr->iCount) // 힙 영역에 할당한 공간에 메모리가 다 참
+		{
+			// 재할당
+			Reallocate(_pArr);
+		}
+		_pArr->pInt[_pArr->iCount++] = _iData;
+		_pArr->iCount;
+	}
+	// 공간 추가 확장
+	void Reallocate()
+	{
+	}
+
+	int main()
+	{
+		tArr s = {};
+		InitArr(&s);
+		RelaeseArr(&s);
+		for (int i = 0; i < 10; ++i)
+		{
+			PushBack(&s, i);
+		}
+
+		return 0
+
+	}
 
 
 
@@ -385,3 +455,4 @@ int main()
 
 
 	//cout.precision(20); cout 소수점 범위 설정
+
