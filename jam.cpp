@@ -405,52 +405,147 @@ int main()
 		}tArr;
 
 	// 배열 초기화 함수
-	void InitArr(tArr* _pArr);
+	void InitArr(tArr* _pArr)
 	{
 		_pArr->pInt = (int*)malloc(40);
 		_pArr->iCount = 0;
 		_pArr->iMaxCount = 10; // 메모리 크기가 40이므로 int 10개가 최대
 	}
 	// 배열 메모리 해제 함수
-	void ReleaseArr(tArr* _pArr);
+	void ReleaseArr(tArr* _pArr)
 	{
 		free(_pArr->pInt);
 		_pArr->iCount = 0;
 		_pArr->iMaxCount = 0;
 	}
 	// 데이터 추가 함수
-	void PushBack(tArr* _pArr, int _iData);
+	void PushBack(tArr* _pArr, int _iData)
 	{
 		if (_pArr->iMaxCount <= _pArr->iCount) // 힙 영역에 할당한 공간에 메모리가 다 참
 		{
 			// 재할당
 			Reallocate(_pArr);
 		}
+		// 데이터 추가
 		_pArr->pInt[_pArr->iCount++] = _iData;
-		_pArr->iCount;
 	}
 	// 공간 추가 확장
 	void Reallocate()
 	{
+
+		// 1. 2배 더 큰 공간을 동적할당한다.
+		int* pNew = (int*)malloc(_pArr->iMaxCount * 2 * sizeof(int));
+		// 2. 기존 공간에 있던 데이터들을 새로 할당한 공간으로 복사시킨다.
+		for (int i = 0; i < _pArr->iCount; ++i)
+		{
+			pNew[i] = _pArr->pInt[i];
+		}
+		// 3. 기존 공간은 메모리 해제
+		free(_pArr->pInt);
+		// 4. 배열이 새로 할당된 공간을 가리키게 한다.
+		_pArr->pInt = pNew;
+		// 5. MaxCount 변경점 적용
+		_pArr->iMaxCount *= 2;
 	}
 
 	int main()
 	{
 		tArr s = {};
+
 		InitArr(&s);
-		RelaeseArr(&s);
+
 		for (int i = 0; i < 10; ++i)
 		{
 			PushBack(&s, i);
 		}
 
+		RelaeseArr(&s);
 		return 0
-
 	}
+	// 1. 가변배열
+	// 스스로 구현 가능하게 복습할 것 << 가능할까..
+	// 2. 가변배열 안에 넣은 데이터 정렬
+	// - 버블정렬
+	//
+
+
+	// 연결형 리스트(보류)
+	typedef struct _tagNode
+	{
+		int iData;
+		tNode* pNextNode;
+	}tNode;
+
+	typedef struct _tagList
+	{
+		tNode* pHeadNode;
+		int iCount;
+	}tLinkedList;
+
+	// C++ 클래스 특징
+	
+	// 생성자, 소멸자
+	// 객체 생성, 소멸 시 자동으로 호출
+	// 직접 만들지 않아도 기본 생성자, 기본 소멸자가 만들어짐
+
+	// 멤버함수. SetInt는 
+	// CMy c;
+	// c.SetInt(10); 에서 c 객체가 있으므로 사용할 수 있음
+	// 해당 클래스가 사용하는 전용 함수
+	// 해당 클래스의 객체가 필요함. int a 에서 a가 객체
+	// 멤버함수를 객체를 통해서 호출하면, 해당 객체의 주소가 this 포인터로 전달된다.
+
+	struct tMy // c++로 오면서 구조체 선언이 쉬워짐
+	{
+
+	};
+	
+	class Cmy
+	{
+		// 접근 제한 지정자
+		//private, protected(상속), public
+	private:
+		int m_i;    //비공개 Cmy. 해도 멤버가 뜨지않음
+		flaot m_f;
+
+	public:
+		int m_j;    //공개 Cmy. 하면 멤버가 뜸
+
+		void SetInt(int i)
+		{
+			this-> m_i = i; // m_i는 private이기때문에 바로 데이터 넣는것은 안됌. 단, 
+			         // Cmy c.SetInt(10); 이런식으로 접근은 가능하다.
+		}			// this포인터라고 부른다. 해당 멤버함수를 호출한 객체의 주소타입 this는 생략가능
+	public:
+		// 생성자, 클래스와 이름이 같다. c++은 생성자가 객체만들어 질때 호출된다.
+		// 이니셜라이져
+		Cmy()
+			: m_i(100)
+			, m_f(0.f)
+		{
+		}
+		// 소멸자
+		~CMy()
+		{
+
+		}
+
+	};
+
+	int main()
+	{
+		CMy c;
+		c.SetInt(10);
+
+		CMy c2;
+		CMy c3;
 
 
 
 
+
+		return 0;
+	}
 
 
 
