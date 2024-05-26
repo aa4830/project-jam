@@ -54,6 +54,8 @@ int main()
 	++data; // 전위 ( 연산 순위 )
 	data++; // 후위
 
+	//cout.precision(20); cout 소수점 범위 설정
+
 	int a = 0;
 	//data = a++; ( 연산자 우선순위 가장 마지막 ), data = a; -> a= a+1;
 	//data = ++a; ( 연산자 우선순위 가장 먼저 )   a= a+1;-> data = a;                                              )
@@ -531,23 +533,54 @@ int main()
 		}
 
 	};
+	// 대입 연산자
+	// 자료형 *변수명; 포인터 변수 선언
+	// *포인터변수; 포인터로 주소 역참조
+	// &변수; 변수의 주소값
+	// 자료형 &변수명; 레퍼런스 변수 선언
 
-	int main()
+	// C++에 추가된 기능
+	// 포인터와 유사/ 원본을 참조한다.
+	// 참조변수를 통해서 직접적으로 원본을 수정 할 수 있다.
+	int a = 10;
+	int* p = &a;
+	*p = 100;
+
+	int& iRef = a;
+	iRef = 100;
+
+	const int* const p2 = &a;
+	//*p2 = 10; 수정 불가
+
+	const int& iRefconst = a;
+	//레퍼런스는 const 하나만 신경쓰면된다.
+
+
+	const CMy& opereator = (const CMy & _other)
 	{
-		CMy c;
-		c.SetInt(10);
+		m_i = _Other.m_i;
+		m_f = _Other.m_f;
 
-		CMy c2;
-		CMy c3;
-
-
-
-
-
-		return 0;
+		return *this;
 	}
+	
+	// C++ 동적할당, new ,delete
+	
+	CTest* pTest = new CTest;
+	delete pTest;
 
+	// vector
 
+	vector<int> vecInt;
+	vecInt.Push_back(10);
 
-	//cout.precision(20); cout 소수점 범위 설정
+	vecInt[0] = 100;
+	vecInt.at(0);
+	vecInt.data();
+	vecInt.size();
+	vecInt.capacity();
 
+	for (size_t i = 0; vecInt.size(); ++i)
+	{
+		cout << vecInt.at(i) << endl;
+	}
